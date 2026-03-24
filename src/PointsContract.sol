@@ -61,7 +61,7 @@ contract PointsContract{
     //lesson2-3 turned the contract into a "Bank" by accepting real Ether via payable and msg.value
     function buyPoints() public payable {
         //require(msg.value>=7 gwei,"Not enough ETH sent");
-	//optimize this part
+	//: Custom errors are significantly cheaper for deployment, but they can occasionally cost a tiny bit more during execution when passing large parameters into the error
 	uint value=msg.value;
 	if(value < 7 gwei) revert NotEnougheth(value);
         balance[msg.sender]+=50000;
