@@ -53,7 +53,9 @@ contract PointsContract{
 	uint bal=balance[msg.sender];	
         if(bal<500) revert NotEnoughbal(bal);
         require(block.timestamp>=lockTime[msg.sender],"You have to wait 30 seconds");
-        balance[msg.sender]-=500;
+	unchecked{
+    	    balance[msg.sender]-=500;
+	}
     }
     //lesson2-3 turned the contract into a "Bank" by accepting real Ether via payable and msg.value
     function buyPoints() public payable {
