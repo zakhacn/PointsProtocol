@@ -4,6 +4,7 @@ pragma solidity ^0.8.26;
 error NotOwner();
 error AlreadyHasProfile();
 error NotEnoughbal(uint count);
+error NotEnougheth(uint value);
 
 contract PointsContract{
 
@@ -59,7 +60,10 @@ contract PointsContract{
     }
     //lesson2-3 turned the contract into a "Bank" by accepting real Ether via payable and msg.value
     function buyPoints() public payable {
-        require(msg.value>=7 gwei,"Not enough ETH sent");
+        //require(msg.value>=7 gwei,"Not enough ETH sent");
+	//optimize this part
+	uint value=msg.value;
+	if(value < 7 gwei) revert NotEnougheth(value);
         balance[msg.sender]+=50000;
     }
     //balance shows on the top of the Deployed Contracts Tab
@@ -99,9 +103,12 @@ contract PointsContract{
         require(msg.sender!=to,"can not transfer to youself");
         require(allowance[from][msg.sender]>=amount,"Not enough allowance");
         if(balance[from]<amount) revert NotEnoughbal(balance[from]);
-        allowance[from][msg.sender]-=amount;
-        balance[from]-=amount;
-        balance[to]+=amount;
+	unchecked{
+        	allowance[from][msg.sender]-=amount;
+        	balance[from]-=amount;
+        	balance[to]+=amount;
+	}
+
         emit TransferOccurred(from, to, amount);
     }
     
