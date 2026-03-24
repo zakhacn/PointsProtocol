@@ -1,4 +1,4 @@
 ExploitTest:test_ApproveBugExploit() (gas: 59860)
 ExploitTest:test_FuzzApproveBug(uint256) (runs: 256, μ: 55177, ~: 55177)
-ExploitTest:test_Transfer() (gas: 45318)
+ExploitTest:test_Transfer() (gas: 44972)
 ExploitTest:test_Withdraw() (gas: 19514)

@@ -82,12 +82,15 @@ contract PointsContract{
         allowance[boss][spender]=amount;
     }
 
-    function transfer(address receiption, uint256 amount) public {
-        require(balance[msg.sender]>=amount,"Not enough balance");
-        balance[msg.sender]-=amount;
-        balance[receiption]+=amount;
-
-        emit TransferOccurred(msg.sender,receiption,amount);
+    function transfer(address recipition, uint256 amount) external{
+       // require(balance[msg.sender]>=amount,"Not enough balance");
+	uint256 bal=balance[msg.sender];
+	if(bal<amount) revert NotEnoughbal(bal);
+	unchecked{
+        	balance[msg.sender]-=amount;
+        	balance[recipition]+=amount;
+	}
+        emit TransferOccurred(msg.sender,recipition,amount);
     }
     //use allowance
     function transferFrom(address from,address to,uint256 amount) public {
